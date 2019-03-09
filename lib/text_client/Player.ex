@@ -2,8 +2,8 @@ defmodule TextClient.Player do
   alias TextClient.{Mover, Prompter, State, Summary}
 
   # won, lost, :good_guess, :bad_guess, :used, :initializing
-  def play(%State{tally: %{game_state: :won}}) do
-    exit_with_message("You Won!!!", "")
+  def play(game = %State{tally: %{game_state: :won}}) do
+    exit_with_message("You Won!!!", Enum.join(game.game_service.letters, ""))
   end
 
   def play(game = %State{tally: %{game_state: :lost}}) do
