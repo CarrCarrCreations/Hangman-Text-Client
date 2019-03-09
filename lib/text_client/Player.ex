@@ -3,11 +3,11 @@ defmodule TextClient.Player do
 
   # won, lost, :good_guess, :bad_guess, :used, :initializing
   def play(%State{tally: %{game_state: :won}}) do
-    exit_with_message("You Won!!!")
+    exit_with_message("You Won!!!", "")
   end
 
-  def play(%State{tally: %{game_state: :lost}}) do
-    exit_with_message("Sorry, you Lost...")
+  def play(game = %State{tally: %{game_state: :lost}}) do
+    exit_with_message("Sorry, you Lost...", Enum.join(game.game_service.letters, ""))
   end
 
   def play(game = %State{tally: %{game_state: :good_guess}}) do
@@ -43,8 +43,9 @@ defmodule TextClient.Player do
     continue(game)
   end
 
-  defp exit_with_message(msg) do
+  defp exit_with_message(msg, word) do
     IO.puts(msg)
+    IO.puts("The word is #{word}")
     exit(:normal)
   end
 end
